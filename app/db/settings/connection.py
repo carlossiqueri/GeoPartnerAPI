@@ -32,6 +32,7 @@ class DBConnectionHandler:
         engine = create_async_engine(
             self.__connection_string,
             connect_args={"ssl": ssl_context},
+            plugins=["geoalchemy2"]
         )
         return engine
 
