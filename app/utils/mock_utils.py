@@ -1,4 +1,4 @@
-{
+partners_mock = {
     "pdvs": [
        {
           "id": "1",
