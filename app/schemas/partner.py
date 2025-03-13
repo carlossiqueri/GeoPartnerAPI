@@ -8,7 +8,7 @@ class PartnerBase(BaseModel):
     """
         Base schema for a business partner.
     """
-    id: Optional[int] = None
+    id: str
     trading_name: str = Field(alias="tradingName")
     owner_name: str = Field(alias="ownerName")
     document: str

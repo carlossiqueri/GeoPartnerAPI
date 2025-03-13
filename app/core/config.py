@@ -14,8 +14,7 @@ class Settings(BaseSettings):
     """
     # Project setup
     PROJECT_NAME: str = 'GeoPartnerAPI'
-    API_V1_STR: str = "api/v1"
-    
+
     # Database setup
     DB_USER: str = os.getenv("DB_USER")
     DB_PASSWORD: str = os.getenv("DB_PASSWORD")
@@ -31,7 +30,7 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = os.getenv("ALGORITHM")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 
-    # CORS (adjust as needed)
+    # CORS
     BACKEND_CORS_ORIGINS: list[str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",

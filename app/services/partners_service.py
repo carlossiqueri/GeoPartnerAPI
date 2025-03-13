@@ -2,6 +2,9 @@ from fastapi import Depends, HTTPException, status
 
 from app.db.repository.partner_repository import PartnerRepository
 from app.schemas.partner import PartnerCreate
+from app.schemas.user import UserLocation
+
+from haversine import haversine
 
 class PartnerService:
     """
@@ -35,3 +38,14 @@ class PartnerService:
         except Exception as exception:
             print(exception)
             raise exception
+
+    async def closest_available_partner(self, user_loc: UserLocation):
+        # try:
+        #     all_partner_locations = await self.partner_repository.get_all_locations()
+        #     print(all_partner_locations)
+
+        # except Exception as exception:
+        #     print(exception)
+        #     raise exception
+
+        pass
