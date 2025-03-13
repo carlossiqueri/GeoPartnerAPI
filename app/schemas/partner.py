@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, ConfigDict, Field
 from pydantic.alias_generators import to_camel
 from shapely import MultiPolygon, Point
@@ -7,6 +8,7 @@ class PartnerBase(BaseModel):
     """
         Base schema for a business partner.
     """
+    id: Optional[int] = None
     trading_name: str = Field(alias="tradingName")
     owner_name: str = Field(alias="ownerName")
     document: str
@@ -21,6 +23,8 @@ class PartnerCreate(PartnerBase):
         Schema for creating a new business partner.
 
         Mainly for future flexibility and code clarity.
+
+        This class could include validation logic, such as regex validation for the document, since it's a CNPJ field.
     """
     pass
 
@@ -28,8 +32,6 @@ class PartnerResponse(PartnerBase):
     """
         Schema for returning a partner.
     """
-    id: int
-
     class Config:
         """
             Converts SQLAlchemy models to Pydantic models.
@@ -63,7 +65,7 @@ class PartnerResponse(PartnerBase):
                 }
 
 
-        return cls(
+        return cls.model_construct(
             id=obj.id,
             trading_name=obj.trading_name,
             owner_name=obj.owner_name,

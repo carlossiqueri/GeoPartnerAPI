@@ -14,14 +14,24 @@ class PartnerService:
         try:
             new_partner = await self.partner_repository.create_partner(partner)
             return new_partner 
+
+        except Exception as exception:
+            # print(exception)
+            raise exception
+
+    async def fetch_partner(self, partner_id: int):
+        try:
+            fetched_partner = await self.partner_repository.fetch_partner(partner_id)
+            if not fetched_partner:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="No partner was found for the given ID."
+                )
+
+            return fetched_partner
+
         except HTTPException as http_exc:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Invalid request data. Please check your input."
-            ) from http_exc
+            raise http_exc
         except Exception as exception:
             print(exception)
-            raise HTTPException(
-                status_code=500,
-                detail="An unexpected error occurred. Please try again later."
-            ) from exception
+            raise exception

@@ -11,3 +11,11 @@ async def create_partner(partner: PartnerCreate, partner_service: PartnerService
     """
     new_partner = await partner_service.create_partner(partner)
     return PartnerResponse.from_orm(new_partner)
+
+@router.get("/fetch_partner/{partner_id}", response_model=PartnerResponse, status_code=status.HTTP_200_OK)
+async def fetch_partner_by_id(partner_id: int, partner_service: PartnerService = Depends(PartnerService)):
+    """
+        Endpoint to fetch a partner using its ID.
+    """
+    fetched_partner = await partner_service.fetch_partner(partner_id)
+    return PartnerResponse.from_orm(fetched_partner)
