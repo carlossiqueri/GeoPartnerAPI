@@ -8,7 +8,7 @@ class Partner(Base):
     """
     __tablename__ = "partners"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(String, primary_key=True, index=True, nullable=False)
     trading_name = Column(String, nullable=False)
     owner_name = Column(String, nullable=False)
     document = Column(String, unique=True,nullable=False)

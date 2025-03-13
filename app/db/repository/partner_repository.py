@@ -28,6 +28,7 @@ class PartnerRepository:
                 )
 
                 new_partner = Partner(
+                    id= partner.id,
                     trading_name = partner.trading_name,
                     owner_name = partner.owner_name,
                     document = partner.document,
@@ -59,6 +60,7 @@ class PartnerRepository:
                         detail="Invalid partner document. Check your input."
                     ) from error
 
+                print(error)
                 raise HTTPException(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                     detail="An unexpected database error occurred."
