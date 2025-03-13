@@ -11,6 +11,6 @@ class Partner(Base):
     id = Column(Integer, primary_key=True, index=True)
     trading_name = Column(String, nullable=False)
     owner_name = Column(String, nullable=False)
-    document = Column(String, nullable=False)
+    document = Column(String, unique=True,nullable=False)
     coverage_area = Column(Geometry("MULTIPOLYGON"), nullable=False)
     address = Column(Geometry("POINT"), nullable=False)

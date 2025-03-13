@@ -1,6 +1,8 @@
 from geoalchemy2.shape import from_shape
 from shapely import MultiPolygon, Point
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
+from fastapi import HTTPException, status
 
 from app.db.models.partners import Partner
 from app.db.settings.connection import DBConnectionHandler
@@ -45,6 +47,22 @@ class PartnerRepository:
             except AttributeError as attribute_error:
                 print(f"Attribute error: {attribute_error}")
                 raise TypeError("Error accessing object attributes") from attribute_error
+
+            except IntegrityError as error:
+                await conn.session.rollback()
+
+                error_message = str(error.orig)
+
+                if "partners_document_key" in error_message:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="Invalid partner document. Check your input."
+                    ) from error
+
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail="An unexpected database error occurred."
+                ) from error
 
             except Exception as exc:
                 print(f"Unexpected error: {exc}")
