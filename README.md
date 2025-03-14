@@ -87,7 +87,3 @@ A documentação interativa da API está disponível em:
 }
 ```
 
-## Autor
-
-Desenvolvido por Carlos Alberto Siqueri Dias.
-
