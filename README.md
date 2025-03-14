@@ -64,7 +64,7 @@ A documentação interativa da API está disponível em:
 - Corpo da requisição (JSON):
 ```sh
 {
-  "id": 1,
+  "id": "1", 
   "tradingName": "Adega da Cerveja - Pinheiros",
   "ownerName": "Zé da Silva",
   "document": "1432132123891/0001",
@@ -78,8 +78,14 @@ A documentação interativa da API está disponível em:
 - Retorna os detalhes de um parceiro cadastrado
 
 ### Buscar parceiro mais próximo
-**GET /partners/closest_available_partner**
+**POST /partners/closest_available_partner**
 - Retorna o parceiro mais próximo que cobre a localização informada
+```sh
+{
+    "lon": -43.297338, // float
+    "lat": -23.013537 // float
+}
+```
 
 ## Autor
 
