@@ -44,7 +44,7 @@ Este projeto foi desenvolvido com base no desafio open-source do Zé Delivery, d
    ```
 5. Inicie a API:
    ```sh
-   uvicorn app.main:app --reload
+   uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload 
    ```
 
 A API estará acessível em `http://localhost:8000`.
