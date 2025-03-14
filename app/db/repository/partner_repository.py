@@ -98,3 +98,28 @@ class PartnerRepository:
             except Exception as exc:
                 print(f"Unexpected error: {exc}")
                 raise RuntimeError("Error creating partner in the database") from exc
+
+    async def get_all_partners(self):
+        """
+            Fetches all partners from the database.
+        """
+        async with self.db_handler as conn:
+            try:
+                query = select(
+                    Partner
+                )
+                result = await conn.session.execute(query)
+                all_partners = result.scalars().all()
+                return all_partners
+                
+            except KeyError as keye_error:
+                print(f"Error accessing dictionary key: {keye_error}")
+                raise ValueError(f"Invalid data: missing key {keye_error}") from keye_error
+
+            except AttributeError as attribute_error:
+                print(f"Attribute error: {attribute_error}")
+                raise TypeError("Error accessing object attributes") from attribute_error
+
+            except Exception as exc:
+                print(f"Unexpected error: {exc}")
+                raise RuntimeError("Error creating partner in the database") from exc

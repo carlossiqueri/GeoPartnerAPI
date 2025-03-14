@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 class UserLocation(BaseModel):
-    log: str
-    lat: str
+    lon: float
+    lat: float

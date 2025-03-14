@@ -34,6 +34,5 @@ async def closest_available_partner(
         Endpoint to search for the closest partner to the user's input location.
         The user's input must be a location within the partner's coverage area.
     """
-    # closest_partner = await partner_service.closest_available_partner(user_loc)
-    # return PartnerResponse.from_orm(closest_partner)
-    pass
+    closest_partner = await partner_service.closest_available_partner(user_loc)
+    return closest_partner
