@@ -4,10 +4,12 @@ from pydantic.alias_generators import to_camel
 from shapely import MultiPolygon, Point
 from shapely.wkb import loads as wkb_loads
 
+
 class PartnerBase(BaseModel):
     """
-        Base schema for a business partner.
+    Base schema for a business partner.
     """
+
     id: str
     trading_name: str = Field(alias="tradingName")
     owner_name: str = Field(alias="ownerName")
@@ -17,53 +19,56 @@ class PartnerBase(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True, alias_generator=to_camel)
 
-    
+
 class PartnerCreate(PartnerBase):
     """
-        Schema for creating a new business partner.
+    Schema for creating a new business partner.
 
-        Mainly for future flexibility and code clarity.
+    Mainly for future flexibility and code clarity.
 
-        This class could include validation logic, such as regex validation for the document, since it's a CNPJ field.
+    This class could include validation logic, such as regex validation for the document, since it's a CNPJ field.
     """
+
     pass
+
 
 class PartnerResponse(PartnerBase):
     """
-        Schema for returning a partner.
+    Schema for returning a partner.
     """
+
     class Config:
         """
-            Converts SQLAlchemy models to Pydantic models.
+        Converts SQLAlchemy models to Pydantic models.
         """
+
         from_attributes = True
 
     @classmethod
     def from_orm(cls, obj):
         """
-            Converts an ORM SQLAlchemy object into a Pydantic model.
+        Converts an ORM SQLAlchemy object into a Pydantic model.
         """
 
         def convert_geometry(geometry):
             """
-                Converts a Shapely object (MultiPolygon or Point) into a valid GeoJSON dictionary.
+            Converts a Shapely object (MultiPolygon or Point) into a valid GeoJSON dictionary.
             """
             geometry = wkb_loads(bytes(geometry.data))
             if isinstance(geometry, MultiPolygon):
                 return {
                     "type": "MultiPolygon",
                     "coordinates": [
-                        [[(point[0], point[1]) for point in polygon.exterior.coords]] +
-                        [[(point[0], point[1]) for point in ring.coords] for ring in polygon.interiors]
+                        [[(point[0], point[1]) for point in polygon.exterior.coords]]
+                        + [
+                            [(point[0], point[1]) for point in ring.coords]
+                            for ring in polygon.interiors
+                        ]
                         for polygon in geometry.geoms
-                    ]
+                    ],
                 }
             if isinstance(geometry, Point):
-                return {
-                    "type": "Point",
-                    "coordinates": (geometry.x, geometry.y)
-                }
-
+                return {"type": "Point", "coordinates": (geometry.x, geometry.y)}
 
         return cls.model_construct(
             id=obj.id,

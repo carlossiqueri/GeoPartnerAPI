@@ -5,15 +5,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class Settings(BaseSettings):
     """
-        Configuration settings for the GeoPartnerAPI project.
+    Configuration settings for the GeoPartnerAPI project.
 
-        This class loads environment variables and defines application settings,
-        including database connection, authentication parameters, and CORS setup.
+    This class loads environment variables and defines application settings,
+    including database connection, authentication parameters, and CORS setup.
     """
+
     # Project setup
-    PROJECT_NAME: str = 'GeoPartnerAPI'
+    PROJECT_NAME: str = "GeoPartnerAPI"
 
     # Database setup
     DB_USER: str = os.getenv("DB_USER")
@@ -38,8 +40,10 @@ class Settings(BaseSettings):
 
     class Config:
         """
-            Pydantic configuration for case sensitivity settings.
+        Pydantic configuration for case sensitivity settings.
         """
+
         case_sensitive = True
+
 
 settings = Settings()
