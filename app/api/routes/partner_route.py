@@ -23,7 +23,7 @@ async def create_partner(
 
 @router.get("/fetch_partner/{partner_id}", response_model=PartnerResponse)
 async def fetch_partner_by_id(
-    partner_id: int, partner_service: PartnerService = Depends(PartnerService)
+    partner_id: str, partner_service: PartnerService = Depends(PartnerService)
 ):
     """
     Endpoint to fetch a partner using its ID.

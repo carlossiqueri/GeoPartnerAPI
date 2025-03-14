@@ -27,7 +27,7 @@ class PartnerService:
             # print(exception)
             raise exception
 
-    async def fetch_partner(self, partner_id: int):
+    async def fetch_partner(self, partner_id: str):
         """
         Fetches a business partner by its ID.
         """

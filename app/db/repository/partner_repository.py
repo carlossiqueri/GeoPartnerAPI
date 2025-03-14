@@ -75,7 +75,7 @@ class PartnerRepository:
                 print(f"Unexpected error: {exc}")
                 raise RuntimeError("Error creating partner in the database") from exc
 
-    async def fetch_partner(self, partner_id: int):
+    async def fetch_partner(self, partner_id: str):
         """
         Search for a partner in the database for a giver ID.
         """
