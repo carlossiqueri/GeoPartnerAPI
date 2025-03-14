@@ -15,10 +15,12 @@ DB_USER = settings.DB_USER
 DB_PASSWORD = settings.DB_PASSWORD
 DB_NAME = settings.DB_NAME
 
+
 class DBConnectionHandler:
     """
-        Class responsible for handling the database connection.
+    Class responsible for handling the database connection.
     """
+
     def __init__(self) -> None:
         self.__connection_string = settings.SQLALCHEMY_DATABASE_URL
         self.__engine = self.__create_async_engine()
@@ -32,7 +34,7 @@ class DBConnectionHandler:
         engine = create_async_engine(
             self.__connection_string,
             connect_args={"ssl": ssl_context},
-            plugins=["geoalchemy2"]
+            plugins=["geoalchemy2"],
         )
         return engine
 

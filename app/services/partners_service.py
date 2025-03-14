@@ -9,14 +9,15 @@ from app.schemas.user import UserLocation
 
 class PartnerService:
     """
-        Service class for managing business partners.
+    Service class for managing business partners.
     """
+
     def __init__(self, partner_repository: PartnerRepository = Depends()) -> None:
         self.partner_repository = partner_repository
 
     async def create_partner(self, partner: PartnerCreate):
         """
-            Creates a new business partner and stores it in the database.
+        Creates a new business partner and stores it in the database.
         """
         try:
             new_partner = await self.partner_repository.create_partner(partner)
@@ -28,14 +29,14 @@ class PartnerService:
 
     async def fetch_partner(self, partner_id: int):
         """
-            Fetches a business partner by its ID.
+        Fetches a business partner by its ID.
         """
         try:
             fetched_partner = await self.partner_repository.fetch_partner(partner_id)
             if not fetched_partner:
                 raise HTTPException(
                     status_code=status.HTTP_404_NOT_FOUND,
-                    detail="No partner was found for the given ID."
+                    detail="No partner was found for the given ID.",
                 )
 
             return fetched_partner
@@ -47,8 +48,8 @@ class PartnerService:
             raise exception
 
     async def closest_available_partner(self, user_loc: UserLocation):
-        """"
-            Finds the closest business partner whose coverage area includes the user's location.
+        """ "
+        Finds the closest business partner whose coverage area includes the user's location.
         """
         try:
             all_partners = await self.partner_repository.get_all_partners()
@@ -65,18 +66,25 @@ class PartnerService:
             # Sort all partners by distance
             sorted_partners = sorted(
                 serialized_all_partners,
-                key=lambda partner: haversine(user_coords, partner.address["coordinates"])
+                key=lambda partner: haversine(
+                    user_coords, partner.address["coordinates"]
+                ),
             )
 
             for partner in sorted_partners:
-                coverage_area = MultiPolygon([
-                    Polygon(rings[0], holes=rings[1:]) for rings in partner.coverage_area["coordinates"]
-                ])
+                coverage_area = MultiPolygon(
+                    [
+                        Polygon(rings[0], holes=rings[1:])
+                        for rings in partner.coverage_area["coordinates"]
+                    ]
+                )
 
                 if coverage_area.contains(user_point_coord):
-                    return partner  
+                    return partner
 
-            raise HTTPException(status_code=404, detail="No partners cover this location")
+            raise HTTPException(
+                status_code=404, detail="No partners cover this location"
+            )
 
         except Exception as exception:
             print(exception)
