@@ -1,4 +1,4 @@
-# Parceiros API
+# GeoPartner API
 
 ## Descrição
 
