@@ -27,11 +27,6 @@ class Settings(BaseSettings):
         f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
 
-    # Auth Setup
-    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY")
-    JWT_ALGORITHM: str = os.getenv("ALGORITHM")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
-
     # CORS
     BACKEND_CORS_ORIGINS: list[str] = [
         "http://localhost:3000",
